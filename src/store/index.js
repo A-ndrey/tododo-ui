@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import tasks from "@/store/tasks/tasks";
-import {setAccessToken, setRefreshToken} from "@/utils/token_storage";
+import {authConfig, setAccessToken, setRefreshToken} from "@/utils/auth_manager";
 import {axiosApiInstance} from "@/axios";
 
 Vue.use(Vuex)
@@ -35,9 +35,9 @@ export default new Vuex.Store({
         },
         login: async ({commit}) => {
             window.open(
-                'http://localhost:3100/web/signin?service=tododo&redirect_url=' + window.location.origin + window.location.pathname,
+                authConfig.loginURL(window.location.origin + window.location.pathname),
                 'login',
-                'width=600,height=400'
+                'width=600,height=800'
             )
             window.onhashchange = function() {
                 window.onhashchange = null

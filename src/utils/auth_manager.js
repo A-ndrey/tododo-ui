@@ -14,9 +14,25 @@ const clear = () => {
     localStorage.removeItem(REFRESH_TOKEN)
 }
 
-const url = `${process.env.VUE_APP_AUTH_SERVICE_HOST}/api/v1/refresh`
+export const authConfig = {
+    host: "",
+    port: 80,
+    service: "",
+    refreshURL() {
+        return `http://${this.host}:${this.port}/api/v1/refresh`
+    },
+    loginURL(redirectURL) {
+        return `http://${this.host}:${this.port}/web/signin?service=${this.service}&redirect_url=${redirectURL}`
+    }
+}
 
-export const getNewToken = () => axios.post(url, {refresh_token: getRefreshToken()})
+export const updateAuthURL = (host, port, service) => {
+    authConfig.host = host
+    authConfig.port = port
+    authConfig.service = service
+}
+
+export const getNewToken = () => axios.post(authConfig.refreshURL(), {refresh_token: getRefreshToken()})
     .then(response => {
         setAccessToken(response.data.access_token)
         setRefreshToken(response.data.refresh_token)

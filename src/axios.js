@@ -1,8 +1,8 @@
 import axios from "axios";
-import {getAccessToken, getNewToken} from "@/utils/token_storage";
+import {getAccessToken, getNewToken, updateAuthURL} from "@/utils/auth_manager";
 
 export const axiosApiInstance = axios.create({
-    baseURL: `${process.env.VUE_APP_BACKEND_HOST}/api/v1`
+    baseURL: `${process.env.VUE_APP_BACKEND_HOST || window.location.origin}/api/v1`
 })
 
 axiosApiInstance.interceptors.request.use(
@@ -20,6 +20,8 @@ axiosApiInstance.interceptors.response.use(
     async error => {
         if (error.response.status === 401 && !error.config._retry) {
             error.config._retry = true
+            let data = error.response.data
+            updateAuthURL(data.auth_host, data.auth_port, data.auth_service)
             await getNewToken()
             return axiosApiInstance(error.config)
         }

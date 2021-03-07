@@ -54,6 +54,7 @@ button {
 }
 
 #form * {
+  outline: none !important;
   width: 100%;
   margin: 10px 0;
   padding: 8px;
