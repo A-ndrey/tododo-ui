@@ -10,7 +10,7 @@
     <div id="view">
       <p id="done-status" v-if="task.is_done"><span class="material-icons-outlined">check_circle</span>Task done</p>
       <h2>{{ task.title }}</h2>
-      <h4>{{ task.description }}</h4>
+      <h4 v-html="htmlLinks(task.description)"></h4>
       <h5>Weight: {{ task.weight }}</h5>
     </div>
   </div>
@@ -24,6 +24,12 @@ export default {
   }),
   props: {
     id: Number
+  },
+  methods: {
+    htmlLinks: (text) => {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      return text.replace(urlRegex, '<a href="$1">$1</a>')
+    }
   },
   created() {
     this.task = this.$store.getters["tasks/findById"](this.id)

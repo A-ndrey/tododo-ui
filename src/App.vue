@@ -37,6 +37,10 @@ html, body {
   color: white;
 }
 
+a {
+  color: white;
+}
+
 #main {
   height: 100%;
 }
