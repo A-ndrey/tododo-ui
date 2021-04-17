@@ -1,7 +1,7 @@
 <template>
   <div id="welcome">
     <img src="@/assets/logo.svg" alt="logo"/>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto assumenda eveniet iusto quis tenetur voluptatum.</p>
+    <p>Welcome to the Tododo. This service helps you get organized and achieve your goals.</p>
     <button class="p-btn" @click="login()">Login</button>
   </div>
 </template>
