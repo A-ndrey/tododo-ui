@@ -18,11 +18,12 @@ export const authConfig = {
     host: "",
     port: 80,
     service: "",
+    protocol: "http",
     refreshURL() {
-        return `http://${this.host}:${this.port}/api/v1/refresh`
+        return `${this.protocol}://${this.host}:${this.port}/api/v1/refresh`
     },
     loginURL(redirectURL) {
-        return `http://${this.host}:${this.port}/web/signin?service=${this.service}&redirect_url=${redirectURL}`
+        return `${this.protocol}://${this.host}:${this.port}/web/signin?service=${this.service}&redirect_url=${redirectURL}`
     }
 }
 
@@ -30,6 +31,11 @@ export const updateAuthURL = (host, port, service) => {
     authConfig.host = host
     authConfig.port = port
     authConfig.service = service
+    if (port === 443) {
+        authConfig.protocol = "https"
+    } else {
+        authConfig.protocol = "http"
+    }
 }
 
 export const getNewToken = () => axios.post(authConfig.refreshURL(), {refresh_token: getRefreshToken()})
