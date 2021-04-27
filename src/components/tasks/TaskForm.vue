@@ -5,9 +5,9 @@
       <span class="material-icons-outlined" title="save" @click="done">done</span>
     </div>
     <div id="form">
-      <input type="text" placeholder="Title" v-model="task.title" title="Title">
-      <textarea rows="10" placeholder="Description" v-model="task.description" title="Description"></textarea>
-      <input type="number" min="0" placeholder="Weight (default 0)" v-model.number="task.weight" title="Weight">
+      <input type="text" placeholder="Title" v-model="initialTask.title" title="Title">
+      <textarea rows="10" placeholder="Description" v-model="initialTask.description" title="Description"></textarea>
+      <input type="number" min="0" placeholder="Weight (default 0)" v-model.number="initialTask.weight" title="Weight">
     </div>
   </div>
 </template>
@@ -19,16 +19,19 @@ export default {
     initialTask: Object,
     doneCallback: Function,
   },
-  data: function () {
-    return {
-      task: this.initialTask || {}
-    }
-  },
+  // data: function () {
+  //   return {
+  //     task: {}
+  //   }
+  // },
   methods: {
     done() {
       this.doneCallback(this.task)
     }
-  }
+  },
+  // computed() {
+  //   this.$store.getters["tasks/findById"]()
+  // }
 }
 </script>
 

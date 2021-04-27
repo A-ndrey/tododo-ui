@@ -28,7 +28,7 @@ export default {
     state: {
         params: [
             new FiltrationParams(
-                'is_done',
+                'isDone',
                 [
                     new FilterOptions('done', false, (tv, ov) => tv === ov),
                     new FilterOptions('undone', false, (tv, ov) => tv !== ov)

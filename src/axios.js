@@ -21,7 +21,7 @@ axiosApiInstance.interceptors.response.use(
         if (error.response.status === 401 && !error.config._retry) {
             error.config._retry = true
             let data = error.response.data
-            updateAuthURL(data.auth_host, data.auth_port, data.auth_service)
+            updateAuthURL(data.authHost, data.authService)
             await getNewToken()
             return axiosApiInstance(error.config)
         }

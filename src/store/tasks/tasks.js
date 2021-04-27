@@ -12,35 +12,30 @@ export default {
         tasks: [],
     },
     getters: {
-        actual: state => state.tasks.filter(task => !task.is_done),
-        done: state => state.tasks.filter(task => task.is_done),
+        actual: state => state.tasks.filter(task => !task.isDone),
+        done: state => state.tasks.filter(task => task.isDone),
         findById: state => id => Object.assign({}, state.tasks.find(task => task.id === id)),
         allTasks: state => state.tasks.objCopy(),
     },
     mutations: {
         changeStatus: (state, taskId) => {
             const task = state.tasks.find(task => task.id === taskId)
-            task.is_done = !task.is_done
+            task.isDone = !task.isDone
         },
+        assign: (state, tasks) => state.tasks = tasks,
         insert: (state, task) => state.tasks.push(task),
         delete: (state, taskId) => state.tasks = state.tasks.filter(task => task.id !== taskId),
         update: (state, task) => state.tasks = state.tasks.replace(t => t.id === task.id, task),
     },
     actions: {
-        fetch: async ({state, commit}) => {
+        fetch: async ({commit}) => {
             axiosApiInstance.get('/tasks/')
-                .then(resp => {
-                    state.tasks = resp.data //todo commit
-                })
-                .catch(err => {
-                    if (err.response && err.response.status === 401) {
-                        commit('logout', null, { root: true })
-                    }
-                })
+                .then(resp => commit('assign', resp.data))
+                .catch(console.log)
         },
         changeStatus: async ({commit, getters}, taskId) => {
             const task = getters.findById(taskId)
-            task.is_done = !task.is_done
+            task.isDone = !task.isDone
             axiosApiInstance.put('/tasks/', task)
                 .then(() => commit('changeStatus', taskId))
                 .catch(console.log)

@@ -8,7 +8,7 @@
       </router-link>
     </div>
     <div id="view">
-      <p id="done-status" v-if="task.is_done"><span class="material-icons-outlined">check_circle</span>Task done</p>
+      <p id="done-status" v-if="task.isDone"><span class="material-icons-outlined">check_circle</span>Task done</p>
       <h2>{{ task.title }}</h2>
       <h4 v-html="htmlLinks(task.description)"></h4>
       <h5>Weight: {{ task.weight }}</h5>

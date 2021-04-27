@@ -9,20 +9,22 @@ export default {
   name: "EditTask",
   components: {TaskForm},
   props: {
-    id: Number
+    id: String
   },
   computed: {
     task() {
-      return Object.assign({}, this.$store.getters["tasks/findById"](this.id))
+      return this.$store.getters["tasks/findById"](parseInt(this.id))
     }
   },
   methods: {
     saveTask(task) {
-      console.log(task)
       this.$store.dispatch("tasks/update", task)
           .then(() => this.$router.push({ name: 'tasks' }))
           .catch(console.log)
     }
+  },
+  mounted() {
+    this.$store.dispatch('tasks/fetch')
   }
 }
 </script>

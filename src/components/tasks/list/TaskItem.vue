@@ -1,6 +1,6 @@
 <template>
   <div id="item">
-    <span id="box" :class="{ checked: task.is_done }" class="material-icons-outlined" @click="handle"></span>
+    <span id="box" :class="{ checked: task.isDone }" class="material-icons-outlined" @click="changeStatus"></span>
     <p id="desc" :title="task.title">{{ task.title }}</p>
     <div id="modify">
       <router-link :to="{ name: 'view task', params: { id: task.id} }" tag="span" class="material-icons-outlined"
@@ -21,8 +21,7 @@ export default {
     task: Object
   },
   methods: {
-    handle() {
-      console.log(this.task)
+    changeStatus() {
       this.$store.dispatch('tasks/changeStatus', this.task.id)
     },
     remove() {
