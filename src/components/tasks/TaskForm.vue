@@ -1,13 +1,13 @@
 <template>
   <div id="form-content">
     <div class="manage-panel">
-      <router-link :to="{ name: 'tasks' }" tag="span" class="material-icons-outlined" title="back">arrow_back</router-link>
+      <span class="material-icons-outlined" title="back" @click="back">arrow_back</span>
       <span class="material-icons-outlined" title="save" @click="done">done</span>
     </div>
     <div id="form">
-      <input type="text" placeholder="Title" v-model="initialTask.title" title="Title">
-      <textarea rows="10" placeholder="Description" v-model="initialTask.description" title="Description"></textarea>
-      <input type="number" min="0" placeholder="Weight (default 0)" v-model.number="initialTask.weight" title="Weight">
+      <input type="text" placeholder="Title" v-model="task.title" title="Title">
+      <textarea rows="10" placeholder="Description" v-model="task.description" title="Description"></textarea>
+      <input type="number" min="0" placeholder="Weight (default 0)" v-model.number="task.weight" title="Weight">
     </div>
   </div>
 </template>
@@ -16,22 +16,17 @@
 export default {
   name: "TaskForm",
   props: {
-    initialTask: Object,
+    task: Object,
     doneCallback: Function,
   },
-  // data: function () {
-  //   return {
-  //     task: {}
-  //   }
-  // },
   methods: {
     done() {
       this.doneCallback(this.task)
+    },
+    back() {
+      this.$router.back()
     }
   },
-  // computed() {
-  //   this.$store.getters["tasks/findById"]()
-  // }
 }
 </script>
 

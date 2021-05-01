@@ -1,5 +1,5 @@
 <template>
-  <task-form :initial-task="task" :done-callback="saveTask"></task-form>
+  <task-form :task="task" :done-callback="saveTask"></task-form>
 </template>
 
 <script>

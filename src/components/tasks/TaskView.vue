@@ -1,8 +1,7 @@
 <template>
   <div id="view-content">
     <div class="manage-panel">
-      <router-link :to="{ name: 'tasks' }" tag="span" class="material-icons-outlined" title="back">arrow_back
-      </router-link>
+      <span class="material-icons-outlined" title="back" @click="back">arrow_back</span>
       <router-link :to="{ name: 'edit task', params: { id: task.id} }" tag="span" class="material-icons-outlined"
                    title="edit">edit
       </router-link>
@@ -23,16 +22,19 @@ export default {
     task: {}
   }),
   props: {
-    id: Number
+    id: String
   },
   methods: {
     htmlLinks: (text) => {
       const urlRegex = /(https?:\/\/[^\s]+)/g;
       return text.replace(urlRegex, '<a href="$1">$1</a>')
+    },
+    back() {
+      this.$router.back()
     }
   },
   created() {
-    this.task = this.$store.getters["tasks/findById"](this.id)
+    this.task = this.$store.getters["tasks/findById"](parseInt(this.id))
     console.log(this.task)
   }
 }

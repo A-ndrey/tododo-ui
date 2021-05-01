@@ -5,7 +5,7 @@ import NewTask from "@/components/tasks/NewTask";
 import EditTask from "@/components/tasks/EditTask";
 import TaskView from "@/components/tasks/TaskView";
 
-export default new VueRouter({
+export const router = new VueRouter({
     routes: [
         {
             path: '',
