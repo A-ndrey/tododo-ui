@@ -1,4 +1,4 @@
-class FiltrationParams {
+class FiltrationParam {
     constructor(name, options, operator) {
         this.name = name
         this.options = options
@@ -15,7 +15,7 @@ class FiltrationParams {
     }
 }
 
-class FilterOptions {
+class FilterOption {
     constructor(name, value, filterFn) {
         this.name = name
         this.value = value
@@ -27,19 +27,19 @@ export default {
     namespaced: true,
     state: {
         params: [
-            new FiltrationParams(
+            new FiltrationParam(
                 'isDone',
                 [
-                    new FilterOptions('done', false, (tv, ov) => tv === ov),
-                    new FilterOptions('undone', false, (tv, ov) => tv !== ov)
+                    new FilterOption('done', false, (tv, ov) => tv === ov),
+                    new FilterOption('not done', false, (tv, ov) => tv !== ov)
                 ],
                 '||'
             ),
-            new FiltrationParams(
+            new FiltrationParam(
                 'weight',
                 [
-                    new FilterOptions('from', '', (tv, ov) => tv >= parseInt(ov) || ov.length === 0),
-                    new FilterOptions('to', '', (tv, ov) => tv <= parseInt(ov) || ov.length === 0)
+                    new FilterOption('from', '', (tv, ov) => tv >= parseInt(ov) || ov.length === 0),
+                    new FilterOption('to', '', (tv, ov) => tv <= parseInt(ov) || ov.length === 0)
                 ],
                 '&&'
             )
