@@ -23,7 +23,7 @@ export default {
       }
     },
     normalizeName(name) {
-      return name.charAt(0).toUpperCase() + name.slice(1).replace('_', ' ')
+      return name.charAt(0).toUpperCase() + name.slice(1).replace(/([A-Z])/, (_, letter) => ' ' + letter.toLowerCase())
     }
   },
   methods: {

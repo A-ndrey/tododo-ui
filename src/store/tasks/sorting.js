@@ -29,7 +29,8 @@ export default {
     state: {
         modParams: [
             new SortingParams('title'),
-            new SortingParams('weight')
+            new SortingParams('weight'),
+            new SortingParams('createdAt')
         ],
         umodParams: [
             new SortingParams('id', 999, -1)

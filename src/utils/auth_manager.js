@@ -30,14 +30,23 @@ export const updateAuthURL = (host, service) => {
     authConfig.service = service
 }
 
-export const getNewToken = () => axios.post(authConfig.refreshURL(), {refresh_token: getRefreshToken()})
-    .then(response => {
-        setAccessToken(response.data.access_token)
-        setRefreshToken(response.data.refresh_token)
-    })
-    .catch(error => {
-        if (error.response.status === 401) {
-            clear()
-        }
-    })
+let refreshingCall
+
+export const getNewToken = () => {
+    if (refreshingCall === undefined) {
+        refreshingCall = axios.post(authConfig.refreshURL(), {refresh_token: getRefreshToken()})
+            .then(response => {
+                setAccessToken(response.data.access_token)
+                setRefreshToken(response.data.refresh_token)
+            })
+            .catch(error => {
+                if (error.response.status === 401) {
+                    clear()
+                }
+            })
+            .finally(() => refreshingCall = undefined)
+    }
+
+    return refreshingCall
+}
 
