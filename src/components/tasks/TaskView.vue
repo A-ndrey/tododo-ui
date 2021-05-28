@@ -10,7 +10,7 @@
       <p class="task-info" v-if="task.isDone"><span class="material-icons-outlined">check_circle</span>Task done</p>
       <p class="task-info" v-if="task.blockedBy"><span class="material-icons-outlined">lock</span>Blocked by {{task.blockedBy}}</p>
       <h2>{{ task.title }}</h2>
-      <h4 v-html="htmlLinks(task.description)"></h4>
+      <h4 v-html="task.description.htmlLinks()"></h4>
       <h5>Weight: {{ task.weight }}</h5>
     </div>
   </div>
@@ -19,24 +19,21 @@
 <script>
 export default {
   name: "TaskView",
-  data: () => ({
-    task: {}
-  }),
   props: {
     id: String
   },
   methods: {
-    htmlLinks: (text) => {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      return text.replace(urlRegex, '<a href="$1">$1</a>')
-    },
     back() {
       this.$router.back()
     }
   },
-  created() {
-    this.task = this.$store.getters["tasks/findById"](parseInt(this.id))
-    console.log(this.task)
+  computed: {
+    task() {
+      return this.$store.getters["tasks/findById"](parseInt(this.id))
+    }
+  },
+  mounted() {
+    this.$store.dispatch('tasks/fetch')
   }
 }
 </script>
