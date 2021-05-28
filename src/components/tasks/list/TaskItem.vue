@@ -1,6 +1,9 @@
 <template>
   <div id="item">
-    <span id="box" :class="{ checked: task.isDone }" class="material-icons-outlined" @click="changeStatus"></span>
+    <span v-if="getActualTasksIds.includes(task.blockedBy)" class="material-icons-outlined"
+          :title="'Blocked by Task#' + task.blockedBy">lock</span>
+    <span v-else id="box" :class="{ checked: task.isDone }" class="material-icons-outlined"
+          @click="changeStatus"></span>
     <p id="desc" :title="task.title">{{ task.title }}</p>
     <div id="modify">
       <router-link :to="{ name: 'view task', params: { id: task.id} }" tag="span" class="material-icons-outlined"
@@ -27,6 +30,11 @@ export default {
     remove() {
       this.$store.dispatch('tasks/delete', this.task.id)
     }
+  },
+  computed: {
+    getActualTasksIds() {
+      return this.$store.getters["tasks/actual"].map(t => t.id)
+    }
   }
 }
 </script>
@@ -40,12 +48,10 @@ export default {
 }
 
 #box:after {
-  /*content: 'check_box_outline_blank';*/
   content: 'radio_button_unchecked';
 }
 
 #box.checked:after {
-  /*content: 'check_box';*/
   content: 'check_circle';
 }
 

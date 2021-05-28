@@ -5,9 +5,16 @@
       <span class="material-icons-outlined" title="save" @click="done">done</span>
     </div>
     <div id="form">
-      <input type="text" placeholder="Title" v-model="task.title" title="Title">
-      <textarea rows="10" placeholder="Description" v-model="task.description" title="Description"></textarea>
-      <input type="number" min="0" placeholder="Weight (default 0)" v-model.number="task.weight" title="Weight">
+      <input type="text" class="input" placeholder="Title" v-model="task.title" title="Title">
+      <textarea rows="10" class="input" placeholder="Description" v-model="task.description"
+                title="Description"></textarea>
+      <input type="number" min="0" class="input" placeholder="Weight (default 0)" v-model.number="task.weight"
+             title="Weight">
+      <select v-model="task.blockedBy" class="input" title="Blocked by">
+        <option value=undefined disabled selected>Blocked by (default None)</option>
+        <option value=undefined>None</option>
+        <option v-for="task in getTasks" :key="task.id" :value="task.id">Task#{{ task.id }} {{ task.title }}</option>
+      </select>
     </div>
   </div>
 </template>
@@ -25,6 +32,11 @@ export default {
     },
     back() {
       this.$router.back()
+    }
+  },
+  computed: {
+    getTasks() {
+      return this.$store.getters["tasks/allTasks"]
     }
   },
 }
@@ -80,5 +92,9 @@ input[type=number]::-webkit-outer-spin-button {
 
 .material-icons-outlined:first-child {
   margin-right: auto;
+}
+
+select {
+  appearance: none;
 }
 </style>

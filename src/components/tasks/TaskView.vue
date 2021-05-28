@@ -7,7 +7,8 @@
       </router-link>
     </div>
     <div id="view">
-      <p id="done-status" v-if="task.isDone"><span class="material-icons-outlined">check_circle</span>Task done</p>
+      <p class="task-info" v-if="task.isDone"><span class="material-icons-outlined">check_circle</span>Task done</p>
+      <p class="task-info" v-if="task.blockedBy"><span class="material-icons-outlined">lock</span>Blocked by {{task.blockedBy}}</p>
       <h2>{{ task.title }}</h2>
       <h4 v-html="htmlLinks(task.description)"></h4>
       <h5>Weight: {{ task.weight }}</h5>
@@ -55,7 +56,7 @@ export default {
   margin-right: auto;
 }
 
-#done-status {
+.task-info {
   display: flex;
   align-items: center;
   user-select: none;
@@ -63,7 +64,7 @@ export default {
   font-size: 0.75em;
 }
 
-#done-status .material-icons-outlined {
+.task-info .material-icons-outlined {
   opacity: 1;
   cursor: inherit;
   font-size: inherit;
